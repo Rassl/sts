@@ -42,7 +42,7 @@ export const Cubes = () => {
               {node.id} {/* Assuming `i.id` should be `node.id` here */}
             </Text>
             <boxGeometry />
-            <meshBasicMaterial attachArray="material" color={color} />
+            <meshStandardMaterial attachArray="material" color={color} />
             <Edges color="#9A9CA5" lineWidth={1} />
           </mesh>
         ))}

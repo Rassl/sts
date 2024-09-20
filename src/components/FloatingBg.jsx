@@ -14,14 +14,14 @@ export const FloatingBg = () => {
         (Math.random() - 0.5) * 1500, // Z position between -50 and 50
       ],
       scale: Math.random() * 2 + 0.5, // Scale between 0.5 and 2.5
-      color: `#818790`, // Random color
+      color: `#4F525E`, // Random color
     }));
   }, []);
 
   return (
     <Instances limit={1000} range={1000}>
       <boxGeometry />
-      <meshStandardMaterial />
+      <meshBasicMaterial />
       {spheres.map((sphere, index) => (
         <Instance
           key={index}
