@@ -1,4 +1,4 @@
-import { Box, Edges, RoundedBox, Text } from "@react-three/drei";
+import { Box, Edges, RoundedBox, Select, Text } from "@react-three/drei";
 import { EffectComposer, Outline } from "@react-three/postprocessing";
 import { useControls } from "leva";
 import { useRef, createRef } from "react";
@@ -29,11 +29,24 @@ export const Cubes = () => {
     hiddenEdgeColor: "lime",
   });
 
+  const onPointerIn = (val) => console.log(val)
+  const onPointerOut = (val) => console.log(val);
+  const handleSelect = (val) => console.log(val);
+
   // Collect only valid refs (non-null) for easy reuse
   const validRefs = refs.current.filter((ref) => ref && ref.current);
 
   return (
-    <>
+    <Select
+      filter={(selected) => {
+        console.log(selected, "here");
+
+        return true;
+      }}
+      onChange={handleSelect}
+      onPointerOut={onPointerOut}
+      onPointerOver={onPointerIn}
+    >
       {nodes
         .filter((i) => i.id !== 10)
         .map((node, index) => (
@@ -43,19 +56,6 @@ export const Cubes = () => {
             <Edges scale={1.01} color="#9A9CA5" lineWidth={2} />
           </mesh>
         ))}
-
-      <EffectComposer autoClear={false}>
-        {/* Apply outline to all cubes except the first one */}
-        {validRefs.length > 1 && (
-          <Outline
-            selection={validRefs.slice(1)} // Apply to all refs except the first one
-            blur={config.blur}
-            visibleEdgeColor={config.visibleEdgeColor}
-            hiddenEdgeColor={config.hiddenEdgeColor}
-            edgeStrength={config.edgeStrength}
-          />
-        )}
-      </EffectComposer>
-    </>
+    </Select>
   );
 };
