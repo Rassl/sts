@@ -23,8 +23,8 @@ function Background() {
 function App() {
 
   const config = useControls({
-    autoRotate: true,
     blur: false,
+    axesHelper: false,
     edgeStrength: { value: 1, min: 0, max: 10 },
     visibleEdgeColor: "lime",
     hiddenEdgeColor: "lime",
@@ -34,7 +34,7 @@ function App() {
     <Canvas shadows camera={{ position: [3, 3, 3], fov: 30 }}>
       {/* <Background /> */}
       <color attach="background" args={["#16171D"]} />
-      <axesHelper args={[2500]} />
+      {config.axesHelper && <axesHelper args={[2500]} />}
       <Experience />
       <Selection>
         <EffectComposer autoClear={false}>
