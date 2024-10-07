@@ -1,25 +1,21 @@
-import { Box, Edges, RoundedBox, Select, Text } from "@react-three/drei";
-import { EffectComposer, Outline } from "@react-three/postprocessing";
+import { Box, Edges, Select } from "@react-three/drei";
+import { createRef, useEffect, useRef } from "react";
+import { Color, Plane, Vector3 } from "three";
 import { useControls } from "leva";
-import { useRef, createRef } from "react";
-import { Color } from "three";
+import { useDrag } from "@use-gesture/react";
+import { useFrame, useThree } from "@react-three/fiber";
 import { nodes } from "../data";
+import { useRefsStore } from "../stores/useRefsStore";
+import { useGraphStore } from "../stores/useGraphStore";
+import { Links } from "./Links"; // Import the Links component
 
 const color = new Color(0x16171d);
 
-export const positions = [
-  [5, 5, 5],
-  [10, 10, 5],
-  [5, -5, 5],
-  [5, 5, -5],
-  [5, -5, -5],
-  [-5, 5, -5],
-  [-5, -5, -5],
-];
-
 export const Cubes = () => {
-  // Create an array of refs for each cube
   const refs = useRef(nodes.map(() => createRef()));
+  const { camera, raycaster } = useThree(); // Access the camera and raycaster
+
+  const { setHoveredNode, hoveredNode } = useGraphStore((state) => state);
 
   const config = useControls({
     autoRotate: true,
@@ -29,33 +25,63 @@ export const Cubes = () => {
     hiddenEdgeColor: "lime",
   });
 
-  const onPointerIn = (val) => console.log(val)
-  const onPointerOut = (val) => console.log(val);
-  const handleSelect = (val) => console.log(val);
+  useFrame((state, delta) => {
+    if (!hoveredNode && refs.current) {
+      refs.current.forEach((nodeRef) => {
+        if (nodeRef.current) {
+          const moveAmount = 10 * delta; // Increased range with delta scaling
+          nodeRef.current.position.x += (Math.random() - 0.5) * moveAmount;
+          nodeRef.current.position.y += (Math.random() - 0.5) * moveAmount;
+          nodeRef.current.position.z += (Math.random() - 0.5) * moveAmount;
+        }
+      });
+    }
+  });
 
-  // Collect only valid refs (non-null) for easy reuse
-  const validRefs = refs.current.filter((ref) => ref && ref.current);
+  const { orbitControlsRef } = useRefsStore((s) => s);
+
+  const onPointerIn = (e) => {
+    setHoveredNode(e.object.userData.id);
+  };
+  const onPointerOut = () => {
+    setHoveredNode(null);
+    orbitControlsRef.current.enabled = true;
+  };
+
+  const bindDrag = useDrag(
+    ({ event, args: [index] }) => {
+      if (orbitControlsRef?.current) {
+        orbitControlsRef.current.enabled = false;
+      }
+
+      raycaster.setFromCamera(event.pointer, camera);
+      raycaster.ray.intersectPlane(new Plane(new Vector3(0, 0, 1), 0), new Vector3());
+
+      refs.current[index].current.position.copy(event.point);
+    },
+    { pointerEvents: true }
+  );
 
   return (
-    <Select
-      filter={(selected) => {
-        console.log(selected, "here");
-
-        return true;
-      }}
-      onChange={handleSelect}
-      onPointerOut={onPointerOut}
-      onPointerOver={onPointerIn}
-    >
-      {nodes
-        .filter((i) => i.id !== 10)
-        .map((node, index) => (
-          <mesh ref={refs.current[index]} key={index} position={node.position}>
-            <boxGeometry args={[1, 1, 1, 32, 32, 32]} />
-            <meshStandardMaterial color={color} />
-            <Edges scale={1.01} color="#9A9CA5" lineWidth={2} />
-          </mesh>
-        ))}
-    </Select>
+    <>
+      {/* Assign a unique name to the parent group for nodes */}
+      <Select onPointerOut={onPointerOut} onPointerOver={onPointerIn}>
+        <group name="simulation__nodes">
+          {nodes.map((node, index) => (
+            <mesh
+              key={index}
+              {...bindDrag(index)}
+              ref={refs.current[index]}
+              position={node.position}
+              userData={{ id: node.id }}
+            >
+              <boxGeometry args={[1, 1, 1, 32, 32, 32]} />
+              <meshStandardMaterial color={color} />
+              <Edges scale={1.01} color="#9A9CA5" lineWidth={2} />
+            </mesh>
+          ))}
+        </group>
+      </Select>
+    </>
   );
 };

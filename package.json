@@ -12,10 +12,13 @@
     "@react-three/drei": "^9.111.3",
     "@react-three/fiber": "^8.17.6",
     "@react-three/postprocessing": "^2.16.2",
+    "@use-gesture/react": "^10.3.1",
     "leva": "^0.9.35",
+    "lil-gui": "^0.19.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "three": "^0.167.1"
+    "three": "^0.167.1",
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
