@@ -7,7 +7,7 @@ import { Color } from "three";
 export const RotatingCube = () => {
   const outerCubeRef = useRef();
   const [cubePositions, setCubePositions] = useState(
-    Array.from({ length: 20 }).map(() => [
+    Array.from({ length: 9 }).map(() => [
       (Math.random() - 0.5) * 3, // Random initial position within bounds (±1.5)
       (Math.random() - 0.5) * 3,
       (Math.random() - 0.5) * 3,
@@ -24,9 +24,9 @@ export const RotatingCube = () => {
   return (
     <group ref={outerCubeRef}>
       {/* Transparent outer cube with edges */}
-      <Box args={[4, 4, 4]}>
+      <Box args={[2, 2, 2]}>
         <meshBasicMaterial transparent opacity={0} />
-        <Edges color="white" />
+        {/* <Edges color="white" /> */}
       </Box>
 
       {/* Generate and position cubes */}
@@ -54,9 +54,11 @@ export const RotatingCube = () => {
         return (
           <Line
             key={`line-${index}`}
+            transparent
+            opacity={0.5}
             points={[startPos, endPos]} // Connects to the next cube
             color="white" // Line color
-            lineWidth={2} // Thickness of the line
+            lineWidth={1} // Thickness of the line
           />
         );
       })}
@@ -103,7 +105,7 @@ const MovingCube = ({ position, color, size, updatePosition }) => {
   });
 
   return (
-    <Box ref={cubeRef} args={[size, size, size]} position={position}>
+    <Box ref={cubeRef} args={[size * 2, size * 2, size * 2]} position={position}>
       <meshStandardMaterial color={cubeColor} />
     </Box>
   );
