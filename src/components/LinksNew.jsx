@@ -2,6 +2,7 @@ import { Line } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 import { useState } from "react";
+import { CustomLine } from "./CustomLine";
 
 export const links = [
   { source: 10, target: 0 },
@@ -24,52 +25,18 @@ export const LinksNew = ({ nodeRefs }) => {
   });
   const { hoveredLink } = config;
 
-  const [dashOffset, setDashOffset] = useState(0); // State to control dash offset
-
-  useFrame((_, delta) => {
-    setDashOffset((prev) => prev - delta * 5); // Continuously update dash offset
-  });
-
   return (
     <group>
       {links.map((link, index) => {
-        // Get the source and target positions using refs
         const sourceNode = nodeRefs.current.find((n) => n.id === link.source);
         const targetNode = nodeRefs.current.find((n) => n.id === link.target);
 
-        if (!sourceNode?.ref.current || !targetNode?.ref.current) {
-          console.log("isNull");
-          return null;
-        }
+        if (!sourceNode?.ref.current || !targetNode?.ref.current) return null;
 
-        const start = sourceNode.ref.current.position;
-        const end = targetNode.ref.current.position;
+        const start = sourceNode.ref.current.position.toArray();
+        const end = targetNode.ref.current.position.toArray();
 
-        return (
-          <group key={index}>
-            {/* Primary dashed line */}
-            <Line
-              points={[start.clone(), end.clone()]} // Use dynamic points from refs
-              color={hoveredLink ? "lime" : "white"}
-              dashed
-              dashScale={5}
-              dashSize={0.5}
-              gapSize={0.2}
-              dashOffset={dashOffset} // Apply animated dash offset
-              transparent
-              opacity={0.6}
-              lineWidth={hoveredLink ? 4 : 1}
-            />
-            {/* Secondary solid line for hover effect */}
-            <Line
-              points={[start.clone(), end.clone()]} // Use dynamic points from refs
-              color={hoveredLink ? "lime" : "white"}
-              transparent
-              opacity={hoveredLink ? 0.1 : 0.4}
-              lineWidth={hoveredLink ? 4 : 0.5}
-            />
-          </group>
-        );
+        return <CustomLine nodeRefs={nodeRefs} link={link} key={index} start={start} end={end} hoveredLink={hoveredLink} />;
       })}
     </group>
   );
