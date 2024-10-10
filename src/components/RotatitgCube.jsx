@@ -5,6 +5,7 @@ import { Color } from "three";
 import { Links } from "./Links";
 import { useGraphStore } from "../stores/useGraphStore";
 import { useDrag } from "@use-gesture/react";
+import { useControls } from "leva";
 
 // Nodes and links data
 const nodes = [
@@ -25,15 +26,25 @@ export const RotatingCube = ({ nodeRefs }) => {
   const outerCubeSize = 25;
   const nodeSize = 2;
   const color = new Color(0x16171d);
-    const { setHoveredNode, hoveredNode } = useGraphStore((state) => state);
+  const { setHoveredNode, hoveredNode } = useGraphStore((state) => state);
+
+  const config = useControls({
+    stopNodesMoving: false,
+    stopRotations: false,
+    edgeRadius: { value: 0.2, min: 0, max: 1 },
+  });
 
   useFrame(() => {
-    if(hoveredNode) {
-        return
+    if (hoveredNode) {
+      return;
     }
 
-    if (outerCubeRef.current) {
+    if (outerCubeRef.current && !config.stopRotations) {
       outerCubeRef.current.rotation.y += 0.005;
+    }
+
+    if (config.stopNodesMoving) {
+      return;
     }
 
     nodeRefs.current.forEach(({ ref, direction }) => {
@@ -53,7 +64,7 @@ export const RotatingCube = ({ nodeRefs }) => {
   });
 
   const onPointerIn = (e) => {
-    console.log(e)
+    console.log(e);
     setHoveredNode(e.object.userData.id);
   };
   const onPointerOut = () => {
@@ -87,14 +98,14 @@ export const RotatingCube = ({ nodeRefs }) => {
         {nodeRefs.current.map(({ ref, id }, index) => (
           <RoundedBox
             key={id}
-            userData={{ref, id}}
+            userData={{ ref, id }}
             ref={ref}
             {...bindDrag(index)}
-            radius={0.2}
+            radius={config.edgeRadius}
             position={nodes.find((node) => node.id === id).position}
             args={[nodeSize, nodeSize, nodeSize]}
           >
-            <meshStandardMaterial color={hoveredNode === id ? 'lime' : color} />
+            <meshStandardMaterial color={hoveredNode === id ? "lime" : color} />
           </RoundedBox>
         ))}
       </Select>

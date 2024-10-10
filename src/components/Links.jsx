@@ -20,10 +20,6 @@ const links = [
 ];
 
 export const Links = ({ nodeRefs }) => {
-  const config = useControls({
-    hoveredLink: true,
-  });
-  const { hoveredLink } = config;
   const { hoveredNode } = useGraphStore((state) => state);
 
   // Create a group reference for grouping lines

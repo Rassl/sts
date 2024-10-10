@@ -7,6 +7,8 @@ import { Experience } from "../Experience";
 import { Links } from "../Links";
 import { RotatingCube } from "../RotatitgCube";
 import { EffectComposer, Outline, Selection } from "@react-three/postprocessing";
+import { ParticleSystem } from '../ParticlesSystem';
+import { FloatingBg } from '../FloatingBg';
 
 // Component for rendering links between nodes
 
@@ -33,29 +35,19 @@ export const Graph = () => {
     }))
   );
 
-  const config = useControls({
-    blur: false,
-    axesHelper: false,
-    edgeStrength: { value: 1, min: 0, max: 10 },
-    visibleEdgeColor: "lime",
-    hiddenEdgeColor: "lime",
-  });
-
   return (
     <>
       <Leva />
       <Canvas camera={{ position: [0, 0, 55], fov: 30, near: 0.1, far: 1000 }}>
         <Experience />
         <ambientLight />
+        <FloatingBg />
         <Selection>
-          <EffectComposer autoClear={false}>
+          {/* <EffectComposer autoClear={false}>
             <Outline
               blur={config.blur}
-              visibleEdgeColor={config.visibleEdgeColor}
-              hiddenEdgeColor={config.hiddenEdgeColor}
-              edgeStrength={config.edgeStrength}
             />
-          </EffectComposer>
+          </EffectComposer> */}
           <RotatingCube nodeRefs={nodeRefs} />
         </Selection>
       </Canvas>

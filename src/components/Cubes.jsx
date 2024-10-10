@@ -17,14 +17,6 @@ export const Cubes = () => {
 
   const { setHoveredNode, hoveredNode } = useGraphStore((state) => state);
 
-  const config = useControls({
-    autoRotate: true,
-    blur: false,
-    edgeStrength: { value: 1, min: 0, max: 10 },
-    visibleEdgeColor: "lime",
-    hiddenEdgeColor: "lime",
-  });
-
   useFrame((state, delta) => {
     if (!hoveredNode && refs.current) {
       refs.current.forEach((nodeRef) => {
