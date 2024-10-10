@@ -33,6 +33,7 @@ export const Experience = () => {
 
   return (
     <>
+      <color attach="background" args={["#16171D"]} />
       <ambientLight intensity={0.5} />
       {config.directionalLightLeft && (
         <directionalLight ref={lightRefLeft} color={"white"} intensity={5} position={[10, -10, 20]} />
