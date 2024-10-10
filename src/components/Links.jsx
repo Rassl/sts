@@ -1,7 +1,7 @@
 import { QuadraticBezierLine } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGraphStore } from "../stores/useGraphStore";
 
 const links = [
@@ -30,8 +30,32 @@ export const Links = ({ nodeRefs }) => {
   const group = useRef();
   const lineRefs = useRef([]);
 
+  const [lines, setLines] = useState([]);
+
+  // Initialize line positions only once
+  useEffect(() => {
+    const initialLines = links.map((link) => {
+      const sourceNode = nodeRefs.current.find((n) => n.id === link.source);
+      const targetNode = nodeRefs.current.find((n) => n.id === link.target);
+
+      if (sourceNode?.ref.current && targetNode?.ref.current) {
+        const start = sourceNode.ref.current.position.toArray();
+        const end = targetNode.ref.current.position.toArray();
+        const mid = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2, (start[2] + end[2]) / 2];
+        return { start, end, mid };
+      }
+
+      return { start: [0, 0, 0], end: [0, 0, 0], mid: [0, 0, 0] };
+    });
+
+    setLines(initialLines);
+  }, [nodeRefs, hoveredNode]);
+
   useFrame((_, delta) => {
     console.log(group);
+    if (hoveredNode) {
+      return;
+    }
     group.current.children.forEach((gr, index) => {
       const link = links[index];
       const sourceNode = nodeRefs.current.find((n) => n.id === link.source);
@@ -53,24 +77,24 @@ export const Links = ({ nodeRefs }) => {
   });
 
   useFrame((_, delta) =>
-    group.current.children.forEach((group) => (group.children[0].material.uniforms.dashOffset.value -= delta * 5))
-  )
+    group.current.children.forEach((group) => (group.children[0].material.uniforms.dashOffset.value -= delta * 10))
+  );
 
   return (
     <group ref={group}>
       {links.map((link, index) => {
         const isHovered = link.source === hoveredNode || link.target === hoveredNode;
 
-        return (
+        return lines.length && (
           <group key={`group-${index}`}>
             {/* Main line with hover effect */}
             <QuadraticBezierLine
-              start={[0, 0, 0]} // Placeholder positions; will be updated dynamically
-              end={[0, 0, 0]} // Placeholder positions; will be updated dynamically
-              mid={[0, 0, 0]} // Straight line from start to end
+              start={lines[index].start}
+              end={lines[index].end}
+              mid={lines[index].mid} // Straight line from start to end
               color={isHovered ? "lime" : "white"}
               dashed
-              transparent={false}
+              transparent={hoveredNode}
               opacity={0.5}
               dashScale={5}
               gapSize={20}
@@ -78,11 +102,12 @@ export const Links = ({ nodeRefs }) => {
             />
             {/* Secondary line for dimmed effect */}
             <QuadraticBezierLine
-              start={[0, 0, 0]} // Placeholder positions; will be updated dynamically
-              end={[0, 0, 0]} // Placeholder positions; will be updated dynamically
-              mid={[0, 0, 0]}
+              start={lines[index].start}
+              end={lines[index].end}
+              mid={lines[index].mid}
               color={isHovered ? "lime" : "white"}
-              transparent={false}
+              transparent={hoveredNode}
+              opacity={0.1}
               lineWidth={isHovered ? 4 : 0.5}
             />
           </group>
