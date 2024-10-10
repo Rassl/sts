@@ -64,33 +64,29 @@ export const RotatingCube = ({ nodeRefs }) => {
   });
 
   const onPointerIn = (e) => {
-    console.log(e);
     setHoveredNode(e.object.userData.id);
   };
   const onPointerOut = () => {
     setHoveredNode(null);
   };
 
-  const bindDrag = useDrag(
-    ({ event, args: [index] }) => {
-      if (orbitControlsRef?.current) {
-        orbitControlsRef.current.enabled = false;
+  // Create drag handler for the outer cube rotation
+  const bindOuterDrag = useDrag(
+    ({ movement: [mx, my], memo = outerCubeRef.current.rotation.clone() }) => {
+      if (outerCubeRef.current) {
+        outerCubeRef.current.rotation.y = memo.y + mx * 0.01;
+        outerCubeRef.current.rotation.x = memo.x + my * 0.01;
       }
-
-      raycaster.setFromCamera(event.pointer, camera);
-      raycaster.ray.intersectPlane(new Plane(new Vector3(0, 0, 1), 0), new Vector3());
-
-      refs.current[index].current.position.copy(event.point);
+      return memo;
     },
     { pointerEvents: true }
   );
 
   return (
-    <group ref={outerCubeRef}>
+    <group ref={outerCubeRef} {...bindOuterDrag()}>
       {/* Transparent outer cube with edges */}
       <Box args={[outerCubeSize, outerCubeSize, outerCubeSize]}>
         <meshBasicMaterial transparent opacity={0} />
-        {/* <Edges color="white" /> */}
       </Box>
 
       {/* Render each moving node using refs */}
@@ -100,7 +96,6 @@ export const RotatingCube = ({ nodeRefs }) => {
             key={id}
             userData={{ ref, id }}
             ref={ref}
-            {...bindDrag(index)}
             radius={config.edgeRadius}
             position={nodes.find((node) => node.id === id).position}
             args={[nodeSize, nodeSize, nodeSize]}
