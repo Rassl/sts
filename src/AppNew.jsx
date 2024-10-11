@@ -11,9 +11,12 @@ import { Graph } from "./components/graph";
 import styled from "styled-components";
 import { Banners } from "./components/banners";
 
-export const AppNew = () => {
+export const App = () => {
   return (
     <Wrapper>
+      <Logo>
+        <img src="sts/Logo.png" alt="" />
+      </Logo>
       <Graph />
       <Banners />
     </Wrapper>
@@ -25,4 +28,11 @@ const Wrapper = styled.div`
   flex: 1;
   height: 100%;
   position: relative;
+`;
+
+const Logo = styled.div`
+  position: absolute;
+  top: 36px;
+  left: 40px;
+  z-index: 1;
 `;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const KnowledgeGraph = () => {
   return (
     <Wrapper>
-      <div className="img"></div>
+      <video className="img" src="/sts/videos/knowledge-graph.mp4" autoPlay loop muted playsInline></video>
       <div className="content">
         <div className="title">Knowledge Graphs</div>
         <div className="subtitle">Workflows create the graph. Unleash the power of graphRAG.</div>
@@ -16,11 +16,13 @@ const Wrapper = styled.div`
   width: 439px;
   height: 209px;
   display: flex;
+
   .img {
     width: 209px;
     border-radius: 6px 6px 0px 0px;
     background: rgba(0, 0, 0, 0.1);
     box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.1);
+    object-fit: cover; /* Ensures the video scales properly */
   }
 
   .content {

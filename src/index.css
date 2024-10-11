@@ -6,3 +6,27 @@
 body {
   margin: 0;
 }
+
+canvas {
+  cursor: none;
+}
+
+/* Custom cursor styling */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Larger cursor when hovering over canvas */
+.custom-cursor.hovering {
+  transform: translate(-50%, -50%) scale(1.2);
+  background: rgba(255, 255, 255, 0.1);
+}

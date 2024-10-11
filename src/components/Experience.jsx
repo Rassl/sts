@@ -13,35 +13,53 @@ export const Experience = () => {
     setOrbitControlsRef(orbitControlsRef);
   }, [setOrbitControlsRef]);
 
-  const lightRefLeft = useRef();
-  const lightRefRight = useRef();
+  const lightRefTopLeft = useRef();
+  const lightRefTopRight = useRef();
+  const lightRefBottomLeft = useRef();
+  const lightRefBottomRight = useRef();
 
   const config = useControls({
     spotLight: true,
-    directionalLightLeft: true,
-    directionalLightRight: true,
+    directionalLightTopLeft: true,
+    directionalLightTopRight: true,
+    directionalLightBottomLeft: true,
+    directionalLightBottomRight: true,
   });
 
-  if (config.directionalLightLeft && lightRefLeft.current) {
-    lightRefLeft.current.lookAt(0, 0, 0); // Make the light point towards (0, 0, 0)
+  if (config.directionalLightTopLeft && lightRefTopLeft.current) {
+    lightRefTopLeft.current.lookAt(0, 0, 0); // Make the light point towards (0, 0, 0)
   }
 
-  if (config.directionalLightLeft && lightRefRight.current) {
-    lightRefRight.current.lookAt(0, 0, 0); // Make the light point towards (0, 0, 0)
+  if (config.directionalLightTopLeft && lightRefTopRight.current) {
+    lightRefTopRight.current.lookAt(0, 0, 0); // Make the light point towards (0, 0, 0)
+  }
+
+  if (config.directionalLightBottomLeft && lightRefBottomLeft.current) {
+    lightRefBottomLeft.current.lookAt(0, 0, 0); // Make the light point towards (0, 0, 0)
+  }
+
+  if (config.directionalLightBottomRight && lightRefBottomRight.current) {
+    lightRefBottomRight.current.lookAt(0, 0, 0); // Make the light point towards (0, 0, 0)
   }
 
   return (
     <>
       <color attach="background" args={["#16171D"]} />
       <ambientLight intensity={0.5} />
-      {config.directionalLightLeft && (
-        <directionalLight ref={lightRefLeft} color={"white"} intensity={5} position={[10, -10, 20]} />
+      {config.directionalLightTopLeft && (
+        <directionalLight ref={lightRefTopLeft} color={"white"} intensity={5} position={[10, -10, 20]} />
       )}
-      {config.directionalLightRight && (
-        <directionalLight ref={lightRefRight} color={"white"} intensity={5} position={[-10, 10, 20]} />
+      {config.directionalLightTopRight && (
+        <directionalLight ref={lightRefTopRight} color={"white"} intensity={5} position={[-10, 10, 20]} />
       )}
-      {config.spotLight && <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={0.5} />}
-      <pointLight position={[-10, -10, -10]} />
+      {config.directionalLightBottomLeft && (
+        <directionalLight ref={lightRefBottomLeft} color={"white"} intensity={5} position={[-10, 10, 20]} />
+      )}
+      {config.directionalLightBottomRight && (
+        <directionalLight ref={lightRefBottomRight} color={"white"} intensity={5} position={[-10, 10, 20]} />
+      )}
+      {config.spotLight && <spotLight position={[10, 5, 0]} angle={0.15} color={'lime'} penumbra={1} intensity={5} />}
+      <pointLight intensity={10} color={'lime'} position={[0, 5, 0]} />
       <OrbitControls ref={orbitControlsRef} rotateSpeed={0.05} />
       {/* <mesh>
         <boxGeometry />

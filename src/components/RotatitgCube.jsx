@@ -25,13 +25,14 @@ export const RotatingCube = ({ nodeRefs }) => {
   const outerCubeRef = useRef();
   const outerCubeSize = 25;
   const nodeSize = 2;
-  const color = new Color(0x16171d);
   const { setHoveredNode, hoveredNode } = useGraphStore((state) => state);
 
   const config = useControls({
     stopNodesMoving: false,
     stopRotations: false,
-    edgeRadius: { value: 0.2, min: 0, max: 1 },
+    edgeRadius: { value: 0.4, min: 0, max: 1 },
+    cubeColor: { value: "#16171d", label: "Cube Color" }, // Updated color control
+    hoveredColor: { value: "lime", label: "Hovered Node Color" }, // Control for hovered color
   });
 
   useFrame(() => {
@@ -100,7 +101,8 @@ export const RotatingCube = ({ nodeRefs }) => {
             position={nodes.find((node) => node.id === id).position}
             args={[nodeSize, nodeSize, nodeSize]}
           >
-            <meshStandardMaterial color={hoveredNode === id ? "lime" : color} />
+            {/* Use Leva's color values for material color */}
+            <meshStandardMaterial color={hoveredNode === id ? config.hoveredColor : config.cubeColor} />
           </RoundedBox>
         ))}
       </Select>

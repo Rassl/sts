@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { AppNew } from "./AppNew";
 import "./index.css";
+import { App } from "./AppNew";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {true && <AppNew />}
-    {false && <App />}
+    <App />
   </React.StrictMode>
 );
