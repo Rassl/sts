@@ -2,18 +2,6 @@ import { Box, Edges } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 
-export const nodes = [
-  { id: 10, position: [0, 0, 0] },
-  { id: 0, position: [5, 5, 5] },
-  { id: 1, position: [10, 8, 10] },
-  { id: 2, position: [5, -5, 5] },
-  { id: 3, position: [5, -15, 5] },
-  { id: 4, position: [-5, -5, 5] },
-  { id: 5, position: [-10, -8, -5] },
-  { id: 6, position: [-5, 5, -5] },
-  { id: 7, position: [5, 5, -5] },
-];
-
 export const RotatingCubeNew = ({ nodeRefs }) => {
   const outerCubeRef = useRef();
   const outerCubeSize = 40;

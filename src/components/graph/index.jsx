@@ -6,23 +6,12 @@ import { Leva, useControls } from "leva";
 import { Experience } from "../Experience";
 import { Links } from "../Links";
 import { RotatingCube } from "../RotatitgCube";
-import { EffectComposer, Outline, Selection } from "@react-three/postprocessing";
+import { Bloom, EffectComposer, Outline, Selection } from "@react-three/postprocessing";
 import { ParticleSystem } from "../ParticlesSystem";
 import { FloatingBg } from "../FloatingBg";
+import { nodes } from "../../data";
 
 // Component for rendering links between nodes
-
-const nodes = [
-  { id: 10, position: [0, 0, 0] },
-  { id: 0, position: [5, 5, 5] },
-  { id: 1, position: [10, 8, 10] },
-  { id: 2, position: [5, -5, 5] },
-  { id: 3, position: [5, -15, 5] },
-  { id: 4, position: [-5, -5, 5] },
-  { id: 5, position: [-10, -8, -5] },
-  { id: 6, position: [-5, 5, -5] },
-  { id: 7, position: [5, 5, -5] },
-];
 
 export const Graph = () => {
   const speed = 0.01;
@@ -34,6 +23,13 @@ export const Graph = () => {
       direction: [Math.random() * speed, Math.random() * speed, Math.random() * speed], // Random initial direction for each node
     }))
   );
+
+//   const { mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
+//     mipmapBlur: !0,
+//     luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
+//     luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
+//     intensity: { value: 2, min: 0, max: 5, step: 0.01 },
+//   });
 
   const [hovering, setHovering] = useState(false);
   const cursorRef = useRef();
@@ -60,7 +56,7 @@ export const Graph = () => {
       <Canvas
         onPointerOver={() => setHovering(true)}
         onPointerOut={() => setHovering(false)}
-        camera={{ position: [0, 0, 55], fov: 30, near: 0.1, far: 1000 }}
+        camera={{ position: [0, 0, 85], fov: 30, near: 0.1, far: 1000 }}
       >
         <Experience />
         <ambientLight />
@@ -71,6 +67,15 @@ export const Graph = () => {
               blur={config.blur}
             />
           </EffectComposer> */}
+          <EffectComposer>
+            {/* <Bloom
+              mipmapBlur={mipmapBlur}
+              luminanceThreshold={luminanceThreshold}
+              luminanceSmoothing={luminanceSmoothing}
+              intensity={intensity}
+            />
+            <Outline /> */}
+          </EffectComposer>
           <RotatingCube nodeRefs={nodeRefs} />
         </Selection>
       </Canvas>

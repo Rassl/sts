@@ -1,4 +1,4 @@
-import { Box, Edges, RoundedBox, Select } from "@react-three/drei";
+import { Box, Edges, Html, RoundedBox, Select } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Color } from "three";
@@ -6,19 +6,8 @@ import { Links } from "./Links";
 import { useGraphStore } from "../stores/useGraphStore";
 import { useDrag } from "@use-gesture/react";
 import { useControls } from "leva";
-
-// Nodes and links data
-const nodes = [
-  { id: 10, position: [0, 0, 0] },
-  { id: 0, position: [5, 5, 5] },
-  { id: 1, position: [10, 8, 10] },
-  { id: 2, position: [5, -5, 5] },
-  { id: 3, position: [5, -15, 5] },
-  { id: 4, position: [-5, -5, 5] },
-  { id: 5, position: [-10, -8, -5] },
-  { id: 6, position: [-5, 5, -5] },
-  { id: 7, position: [5, 5, -5] },
-];
+import styled from "styled-components";
+import { nodes } from "../data";
 
 // Component for rendering and updating node positions
 export const RotatingCube = ({ nodeRefs }) => {
@@ -28,7 +17,7 @@ export const RotatingCube = ({ nodeRefs }) => {
   const { setHoveredNode, hoveredNode } = useGraphStore((state) => state);
 
   const config = useControls({
-    stopNodesMoving: false,
+    stopNodesMoving: true,
     stopRotations: false,
     edgeRadius: { value: 0.4, min: 0, max: 1 },
     cubeColor: { value: "#16171d", label: "Cube Color" }, // Updated color control

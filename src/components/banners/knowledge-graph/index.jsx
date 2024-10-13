@@ -1,12 +1,18 @@
 import styled from "styled-components";
+import { useGraphStore } from "../../../stores/useGraphStore";
+import { nodes } from "../../../data";
 
 export const KnowledgeGraph = () => {
+ const { hoveredNode } = useGraphStore((s) => s);
+
+ const node = nodes.find((i) => i.id === hoveredNode)
+
   return (
     <Wrapper>
-      <video className="img" src="/sts/videos/knowledge-graph.mp4" autoPlay loop muted playsInline></video>
+      <video className="img" src={`/sts/videos/${hoveredNode}.mp4`} autoPlay loop muted playsInline></video>
       <div className="content">
-        <div className="title">Knowledge Graphs</div>
-        <div className="subtitle">Workflows create the graph. Unleash the power of graphRAG.</div>
+        <div className="title">{node.title}</div>
+        <div className="subtitle">{node.subtitle}</div>
       </div>
     </Wrapper>
   );

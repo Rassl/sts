@@ -60,7 +60,7 @@ export const Experience = () => {
       )}
       {config.spotLight && <spotLight position={[10, 5, 0]} angle={0.15} color={'lime'} penumbra={1} intensity={5} />}
       <pointLight intensity={10} color={'lime'} position={[0, 5, 0]} />
-      <OrbitControls ref={orbitControlsRef} rotateSpeed={0.05} />
+      <OrbitControls ref={orbitControlsRef} minDistance={10} maxDistance={150} rotateSpeed={0.05} />
       {/* <mesh>
         <boxGeometry />
         <meshStandardMaterial attachArray="material" color="#45C66E" />

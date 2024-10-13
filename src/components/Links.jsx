@@ -3,21 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 import { useEffect, useRef, useState } from "react";
 import { useGraphStore } from "../stores/useGraphStore";
-
-const links = [
-  { source: 10, target: 0 },
-  { source: 0, target: 1 },
-  { source: 10, target: 2 },
-  { source: 10, target: 3 },
-  { source: 10, target: 4 },
-  { source: 10, target: 5 },
-  { source: 10, target: 7 },
-  { source: 6, target: 7 },
-  { source: 6, target: 5 },
-  { source: 7, target: 4 },
-  { source: 3, target: 4 },
-  { source: 3, target: 2 },
-];
+import { links } from "../data";
 
 export const Links = ({ nodeRefs }) => {
   const { hoveredNode } = useGraphStore((state) => state);
