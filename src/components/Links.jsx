@@ -8,6 +8,10 @@ import { links } from "../data";
 export const Links = ({ nodeRefs }) => {
   const { hoveredNodeId } = useGraphStore((state) => state);
 
+   const config = useControls({
+     edgeColor: { value: 'white', label: "Link color" }, // Control for hovered color
+   });
+
   // Create a group reference for grouping lines
   const group = useRef();
   const lineRefs = useRef([]);
@@ -73,7 +77,7 @@ export const Links = ({ nodeRefs }) => {
               start={lines[index].start}
               end={lines[index].end}
               mid={lines[index].mid} // Straight line from start to end
-              color={isHovered ? "lime" : "white"}
+              color={isHovered ? "lime" : config.edgeColor}
               dashed
               transparent={hoveredNodeId}
               opacity={0.5}
@@ -86,7 +90,7 @@ export const Links = ({ nodeRefs }) => {
               start={lines[index].start}
               end={lines[index].end}
               mid={lines[index].mid}
-              color={isHovered ? "lime" : "white"}
+              color={isHovered ? "lime" : config.edgeColor}
               transparent={hoveredNodeId}
               opacity={0.1}
               lineWidth={isHovered ? 4 : 0.5}

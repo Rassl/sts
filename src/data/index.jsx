@@ -1,17 +1,17 @@
 export const nodes = [
-  { id: "agent-assisted", title: "Agents", subtitle: "Breaking complex tasks into simple steps", position: [0, 0, 15] },
+  {
+    id: "knowledge-graph",
+    title: "Knowledge Graphs",
+    subtitle: "Workflows create the graph. Unleash the power of graphRAG.",
+    position: [0, 0, 0],
+  },
+  { id: "agent-assisted", title: "Agents", subtitle: "Breaking complex tasks into simple steps", position: [5, -5, 5] },
   { id: "corporate-graph", title: "Corporate Graphs", subtitle: "Companies need a Digital Twin", position: [5, 5, 5] },
   {
     id: "human-curation",
     title: "Human Curation",
     subtitle: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accu santium dolor emque.",
     position: [10, 8, 10],
-  },
-  {
-    id: "knowledge-graph",
-    title: "Knowledge Graphs",
-    subtitle: "Workflows create the graph. Unleash the power of graphRAG.",
-    position: [5, -5, 5],
   },
   {
     id: "multiple-people",

@@ -27,12 +27,12 @@ export const Graph = () => {
     }))
   );
 
-  const { mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
-    mipmapBlur: !0,
-    luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
-    luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-    intensity: { value: 2, min: 0, max: 5, step: 0.01 },
-  });
+//   const { mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
+//     mipmapBlur: !0,
+//     luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
+//     luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
+//     intensity: { value: 2, min: 0, max: 5, step: 0.01 },
+//   });
 
   const [hovering, setHovering] = useState(false);
   const cursorRef = useRef();

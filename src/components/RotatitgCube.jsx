@@ -17,8 +17,7 @@ export const RotatingCube = ({ nodeRefs }) => {
   const { setHoveredNodeId, hoveredNodeId } = useGraphStore((state) => state);
 
   const config = useControls({
-    stopNodesMoving: true,
-    stopRotations: true,
+    stopRotations: false,
     edgeRadius: { value: 0.4, min: 0, max: 1 },
     cubeColor: { value: "#16171d", label: "Cube Color" }, // Updated color control
     hoveredColor: { value: "rgba(69, 198, 110, 1)", label: "Hovered Node Color" }, // Control for hovered color
@@ -33,24 +32,6 @@ export const RotatingCube = ({ nodeRefs }) => {
       outerCubeRef.current.rotation.y += 0.005;
     }
 
-    // if (config.stopNodesMoving) {
-    //   return;
-    // }
-
-    // nodeRefs.current.forEach(({ ref, direction }) => {
-    //   if (!ref.current) return;
-
-    //   const pos = ref.current.position;
-    //   const halfSize = outerCubeSize / 2 - nodeSize / 2;
-
-    //   pos.x += direction[0];
-    //   pos.y += direction[1];
-    //   pos.z += direction[2];
-
-    //   if (pos.x > halfSize || pos.x < -halfSize) direction[0] *= -1;
-    //   if (pos.y > halfSize || pos.y < -halfSize) direction[1] *= -1;
-    //   if (pos.z > halfSize || pos.z < -halfSize) direction[2] *= -1;
-    // });
   });
 
   const onPointerIn = (e) => {
@@ -86,7 +67,7 @@ export const RotatingCube = ({ nodeRefs }) => {
         <RoundedBox
           position={hoveredNode.position}
           radius={config.edgeRadius}
-          args={[nodeSize + 0.5, nodeSize + 0.5, nodeSize + 0.5]}
+          args={[nodeSize + 1, nodeSize + 1, nodeSize + 1]}
           ref={highlightCubeRef}
         >
           <meshStandardMaterial
@@ -94,7 +75,7 @@ export const RotatingCube = ({ nodeRefs }) => {
             transparent
             depthWrite={true}
             depthTest={false}
-            opacity={0.01} // Adjust the opacity as desired
+            opacity={0.1} // Adjust the opacity as desired
           />
         </RoundedBox>
       )}
@@ -111,7 +92,9 @@ export const RotatingCube = ({ nodeRefs }) => {
               position={nodes.find((node) => node.id === id).position}
               args={[nodeSize, nodeSize, nodeSize]}
             >
-              <meshStandardMaterial color={hoveredNodeId === id ? config.hoveredColor :  config.cubeColor} />
+              <meshStandardMaterial
+                color={hoveredNodeId === id || id === "knowledge-graph" ? config.hoveredColor : config.cubeColor}
+              />
             </RoundedBox>
           </Fragment>
         ))}
