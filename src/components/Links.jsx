@@ -62,7 +62,7 @@ export const Links = ({ nodeRefs }) => {
   });
 
   useFrame((_, delta) =>
-    group.current.children.forEach((group) => (group.children[0].material.uniforms.dashOffset.value -= delta * 5))
+    group.current.children.forEach((group) => (group.children[0].material.uniforms.dashOffset.value -= delta * 15))
   );
 
   return (
@@ -82,7 +82,7 @@ export const Links = ({ nodeRefs }) => {
               transparent={hoveredNodeId}
               opacity={0.5}
               dashScale={5}
-              gapSize={80}
+              gapSize={isHovered ? 8 : 80}
               lineWidth={isHovered ? 4 : 1}
             />
             {/* Secondary line for dimmed effect */}

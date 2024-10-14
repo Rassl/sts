@@ -10,6 +10,7 @@ import { EffectComposer, Outline, Selection } from "@react-three/postprocessing"
 import { Graph } from "./components/graph";
 import styled from "styled-components";
 import { Banners } from "./components/banners";
+import { Footer } from "./components/footer";
 
 export const App = () => {
   return (
@@ -19,6 +20,7 @@ export const App = () => {
       </Logo>
       <Graph />
       <Banners />
+      <Footer />
     </Wrapper>
   );
 };

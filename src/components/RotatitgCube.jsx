@@ -7,6 +7,7 @@ import { useGraphStore } from "../stores/useGraphStore";
 import { nodes } from "../data";
 import { Node } from "./Node";
 import { Links } from "./Links";
+import { GhostCube } from "./GhostCube";
 
 export const RotatingCube = ({ nodeRefs }) => {
   const outerCubeRef = useRef();
@@ -43,12 +44,16 @@ export const RotatingCube = ({ nodeRefs }) => {
     { pointerEvents: true }
   );
 
+  const hoveredNode = nodes.find((i) => i.id === hoveredNodeId);
+
   return (
     <group ref={outerCubeRef} {...bindOuterDrag()}>
       {/* Transparent outer cube */}
       <Box args={[25, 25, 25]}>
         <meshBasicMaterial transparent opacity={0} />
       </Box>
+
+      {hoveredNodeId && <GhostCube config={config} hoveredNode={hoveredNode} />}
 
       {/* Render each node using the Node component */}
       <Select onPointerOut={onPointerOut} onPointerOver={onPointerIn}>
