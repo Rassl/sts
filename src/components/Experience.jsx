@@ -59,7 +59,7 @@ export const Experience = () => {
         <directionalLight ref={lightRefBottomRight} color={"white"} intensity={5} position={[-10, 10, 20]} />
       )}
       {config.spotLight && <spotLight position={[10, 5, 0]} angle={0.15} color={'lime'} penumbra={1} intensity={5} />}
-      <pointLight intensity={10} color={'lime'} position={[0, 5, 0]} />
+      <pointLight intensity={500} color={'lime'} position={[0, 0, 0]} />
       <OrbitControls ref={orbitControlsRef} minDistance={80} maxDistance={100} rotateSpeed={0.05} />
       {/* <mesh>
         <boxGeometry />
