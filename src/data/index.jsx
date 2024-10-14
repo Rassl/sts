@@ -5,7 +5,7 @@ export const nodes = [
     subtitle: "Workflows create the graph. Unleash the power of graphRAG.",
     position: [0, 0, 0],
   },
-  { id: "agent-assisted", title: "Agents", subtitle: "Breaking complex tasks into simple steps", position: [5, -5, 5] },
+  { id: "agent-assisted", title: "Agents", subtitle: "Breaking complex tasks into simple steps", position: [10, -5, 10] },
   { id: "corporate-graph", title: "Corporate Graphs", subtitle: "Companies need a Digital Twin", position: [5, 5, 5] },
   {
     id: "human-curation",

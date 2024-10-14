@@ -9,7 +9,7 @@ export const Links = ({ nodeRefs }) => {
   const { hoveredNodeId } = useGraphStore((state) => state);
 
    const config = useControls({
-     edgeColor: { value: 'white', label: "Link color" }, // Control for hovered color
+     edgeColor: { value: "#9194A4", label: "Link color" }, // Control for hovered color
    });
 
   // Create a group reference for grouping lines

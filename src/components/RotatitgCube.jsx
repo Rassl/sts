@@ -1,47 +1,37 @@
-import { Box, Edges, Html, RoundedBox, Select } from "@react-three/drei";
+import { Box, Select } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { Fragment, useRef } from "react";
-import { Color } from "three";
-import { Links } from "./Links";
-import { useGraphStore } from "../stores/useGraphStore";
+import { useRef } from "react";
 import { useDrag } from "@use-gesture/react";
 import { useControls } from "leva";
-import styled from "styled-components";
+import { useGraphStore } from "../stores/useGraphStore";
 import { nodes } from "../data";
+import { Node } from "./Node";
+import { Links } from "./Links";
 
 export const RotatingCube = ({ nodeRefs }) => {
   const outerCubeRef = useRef();
-  const highlightCubeRef = useRef();
-  const outerCubeSize = 25;
-  const nodeSize = 2;
   const { setHoveredNodeId, hoveredNodeId } = useGraphStore((state) => state);
 
   const config = useControls({
     stopRotations: false,
-    edgeRadius: { value: 0.4, min: 0, max: 1 },
-    cubeColor: { value: "#16171d", label: "Cube Color" }, // Updated color control
-    hoveredColor: { value: "rgba(69, 198, 110, 1)", label: "Hovered Node Color" }, // Control for hovered color
+    cubeColor: { value: "#16171d", label: "Cube Color" },
+    hoveredColor: { value: "rgba(69, 198, 110, 1)", label: "Hovered Node Color" },
   });
 
   useFrame(() => {
-    if (hoveredNodeId) {
-      return;
-    }
-
-    if (outerCubeRef.current && !config.stopRotations) {
+    if (!hoveredNodeId && outerCubeRef.current && !config.stopRotations) {
       outerCubeRef.current.rotation.y += 0.005;
     }
-
   });
 
   const onPointerIn = (e) => {
     setHoveredNodeId(e.object.userData.id);
   };
+
   const onPointerOut = () => {
     setHoveredNodeId(null);
   };
 
-  // Create drag handler for the outer cube rotation
   const bindOuterDrag = useDrag(
     ({ movement: [mx, my], memo = outerCubeRef.current.rotation.clone() }) => {
       if (outerCubeRef.current) {
@@ -53,51 +43,29 @@ export const RotatingCube = ({ nodeRefs }) => {
     { pointerEvents: true }
   );
 
-  const hoveredNode = nodes.find((node) => node.id === hoveredNodeId);
-
   return (
     <group ref={outerCubeRef} {...bindOuterDrag()}>
-      {/* Transparent outer cube with edges */}
-      <Box args={[outerCubeSize, outerCubeSize, outerCubeSize]}>
+      {/* Transparent outer cube */}
+      <Box args={[25, 25, 25]}>
         <meshBasicMaterial transparent opacity={0} />
       </Box>
 
-      {/* Highlight cube that shows up around the hovered node */}
-      {hoveredNode && (
-        <RoundedBox
-          position={hoveredNode.position}
-          radius={config.edgeRadius}
-          args={[nodeSize + 1, nodeSize + 1, nodeSize + 1]}
-          ref={highlightCubeRef}
-        >
-          <meshStandardMaterial
-            color={config.hoveredColor}
-            transparent
-            depthWrite={true}
-            depthTest={false}
-            opacity={0.1} // Adjust the opacity as desired
-          />
-        </RoundedBox>
-      )}
-
-      {/* Render each moving node using refs */}
+      {/* Render each node using the Node component */}
       <Select onPointerOut={onPointerOut} onPointerOver={onPointerIn}>
-        {nodeRefs.current.map(({ ref, id }, index) => (
-          <Fragment key={id}>
-            <RoundedBox
+        {nodeRefs.current.map(({ ref, id }) => {
+          const nodeData = nodes.find((node) => node.id === id);
+          return (
+            <Node
               key={id}
-              userData={{ ref, id }}
-              ref={ref}
-              radius={config.edgeRadius}
-              position={nodes.find((node) => node.id === id).position}
-              args={[nodeSize, nodeSize, nodeSize]}
-            >
-              <meshStandardMaterial
-                color={hoveredNodeId === id || id === "knowledge-graph" ? config.hoveredColor : config.cubeColor}
-              />
-            </RoundedBox>
-          </Fragment>
-        ))}
+              id={id}
+              position={nodeData.position}
+              color={config.cubeColor}
+              hoveredColor={config.hoveredColor}
+              isHovered={hoveredNodeId === id}
+              nodeRef={ref}
+            />
+          );
+        })}
       </Select>
       <Links nodeRefs={nodeRefs} />
     </group>
