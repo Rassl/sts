@@ -15,10 +15,10 @@ export const Cubes = () => {
   const refs = useRef(nodes.map(() => createRef()));
   const { camera, raycaster } = useThree(); // Access the camera and raycaster
 
-  const { setHoveredNode, hoveredNode } = useGraphStore((state) => state);
+  const { setHoveredNodeId, hoveredNodeId } = useGraphStore((state) => state);
 
   useFrame((state, delta) => {
-    if (!hoveredNode && refs.current) {
+    if (!hoveredNodeId && refs.current) {
       refs.current.forEach((nodeRef) => {
         if (nodeRef.current) {
           const moveAmount = 10 * delta; // Increased range with delta scaling
@@ -33,10 +33,10 @@ export const Cubes = () => {
   const { orbitControlsRef } = useRefsStore((s) => s);
 
   const onPointerIn = (e) => {
-    setHoveredNode(e.object.userData.id);
+    setHoveredNodeId(e.object.userData.id);
   };
   const onPointerOut = () => {
-    setHoveredNode(null);
+    setHoveredNodeId(null);
     orbitControlsRef.current.enabled = true;
   };
 

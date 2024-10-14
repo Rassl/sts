@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'Barlow';
+  font-weight: 300;
+  src: local('Barlow'), url('/fonts/Barlow-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Supply';
+  font-weight: 300;
+  src: local('Supply'), url('/fonts/Supply-Medium.otf') format('truetype');
+}
+
 #root {
   width: 100vw;
   height: 100vh;
@@ -11,22 +23,38 @@ canvas {
   cursor: none;
 }
 
-/* Custom cursor styling */
 .custom-cursor {
   position: fixed;
   width: 20px;
   height: 20px;
-  border: 2px solid white;
-  border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s ease;
+  transition: transform 0.1s ease, width 1s ease, height 1s ease;
   z-index: 9999;
   background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
 }
 
 /* Larger cursor when hovering over canvas */
 .custom-cursor.hovering {
   transform: translate(-50%, -50%) scale(1.2);
   background: rgba(255, 255, 255, 0.1);
+}
+
+.custom-cursor.hovering.exploring {
+  transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+  background: rgba(255, 255, 255, 0.1);
+  width: 30px;
+  height: 30px;
+  animation: rotateCursor 2s infinite linear;
+}
+
+/* Keyframes for rotation animation */
+@keyframes rotateCursor {
+  from {
+    transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.2) rotate(360deg);
+  }
 }

@@ -10,11 +10,14 @@ import { Bloom, EffectComposer, Outline, Selection } from "@react-three/postproc
 import { ParticleSystem } from "../ParticlesSystem";
 import { FloatingBg } from "../FloatingBg";
 import { nodes } from "../../data";
+import { useGraphStore } from "../../stores/useGraphStore";
 
 // Component for rendering links between nodes
 
 export const Graph = () => {
   const speed = 0.01;
+
+  const { hoveredNodeId } = useGraphStore((s) => s);
 
   const nodeRefs = useRef(
     nodes.map((node) => ({
@@ -24,12 +27,12 @@ export const Graph = () => {
     }))
   );
 
-//   const { mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
-//     mipmapBlur: !0,
-//     luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
-//     luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-//     intensity: { value: 2, min: 0, max: 5, step: 0.01 },
-//   });
+  const { mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
+    mipmapBlur: !0,
+    luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
+    luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
+    intensity: { value: 2, min: 0, max: 5, step: 0.01 },
+  });
 
   const [hovering, setHovering] = useState(false);
   const cursorRef = useRef();
@@ -51,7 +54,15 @@ export const Graph = () => {
 
   return (
     <>
-      <div ref={cursorRef} className={`custom-cursor ${hovering ? "hovering" : ""}`} />
+      <div
+        ref={cursorRef}
+        className={`custom-cursor ${hovering ? "hovering" : ""} ${hoveredNodeId ? "exploring" : ""} `}
+      >
+        <svg width="100%" height="100%" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="18" stroke="white" stroke-width="2" fill="none" stroke-dasharray="10 8"></circle>
+        </svg>
+      </div>
+
       <Leva />
       <Canvas
         onPointerOver={() => setHovering(true)}
@@ -64,7 +75,6 @@ export const Graph = () => {
         <Selection>
           {/* <EffectComposer autoClear={false}>
             <Outline
-              blur={config.blur}
             />
           </EffectComposer> */}
           <EffectComposer>
@@ -73,8 +83,8 @@ export const Graph = () => {
               luminanceThreshold={luminanceThreshold}
               luminanceSmoothing={luminanceSmoothing}
               intensity={intensity}
-            />
-            <Outline /> */}
+            /> */}
+            <Outline />
           </EffectComposer>
           <RotatingCube nodeRefs={nodeRefs} />
         </Selection>

@@ -1,5 +1,5 @@
 export const nodes = [
-  { id: "agent-assisted", title: "Agents", subtitle: "Breaking complex tasks into simple steps", position: [0, 0, 0] },
+  { id: "agent-assisted", title: "Agents", subtitle: "Breaking complex tasks into simple steps", position: [0, 0, 15] },
   { id: "corporate-graph", title: "Corporate Graphs", subtitle: "Companies need a Digital Twin", position: [5, 5, 5] },
   {
     id: "human-curation",

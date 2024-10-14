@@ -4,7 +4,7 @@ import { useGraphStore } from "../../stores/useGraphStore";
 import { KnowledgeGraph } from "./knowledge-graph";
 
 export const Banners = () => {
-  const { hoveredNode } = useGraphStore((s) => s);
+  const { hoveredNodeId } = useGraphStore((s) => s);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [isVisible, setIsVisible] = useState(false);
 
@@ -13,11 +13,11 @@ export const Banners = () => {
       const mouseX = e.clientX;
       const mouseY = e.clientY;
 
-      const padding = 10; // Offset by 10px for better visibility
+      const padding = 40; // Offset by 10px for better visibility
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
-      const wrapperWidth = 200; // Adjust this to your actual wrapper width
-      const wrapperHeight = 150; // Adjust this to your actual wrapper height
+      const wrapperWidth = 439; // Adjust this to your actual wrapper width
+      const wrapperHeight = 209; // Adjust this to your actual wrapper height
 
       // Calculate available space on each side of the mouse
       const spaceBottom = windowHeight - mouseY;
@@ -43,7 +43,7 @@ export const Banners = () => {
       setPosition({ top: newTop, left: newLeft });
     };
 
-    if (hoveredNode) {
+    if (hoveredNodeId) {
       setIsVisible(true);
       window.addEventListener("mousemove", handleMouseMove);
     } else {
@@ -51,13 +51,13 @@ export const Banners = () => {
       window.removeEventListener("mousemove", handleMouseMove);
     }
 
-    // Cleanup the event listener when the component unmounts or hoveredNode changes
+    // Cleanup the event listener when the component unmounts or hoveredNodeId changes
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [hoveredNode]);
+  }, [hoveredNodeId]);
 
-  return hoveredNode ? (
+  return hoveredNodeId ? (
     <Wrapper style={{ top: `${position.top}px`, left: `${position.left}px` }} isVisible={isVisible}>
       <KnowledgeGraph />
     </Wrapper>
@@ -66,7 +66,7 @@ export const Banners = () => {
 
 const Wrapper = styled.div`
   position: absolute;
-  transform: translateY(${(props) => (props.isVisible ? "0" : "100%")});
+  /* transform: translateY(${(props) => (props.isVisible ? "0" : "100%")}); */
   background: #23252f;
   box-shadow: 0px 0px 80px 0px rgba(0, 0, 0, 0.5);
   color: #fff;

@@ -6,7 +6,7 @@ import { useGraphStore } from "../stores/useGraphStore";
 import { links } from "../data";
 
 export const Links = ({ nodeRefs }) => {
-  const { hoveredNode } = useGraphStore((state) => state);
+  const { hoveredNodeId } = useGraphStore((state) => state);
 
   // Create a group reference for grouping lines
   const group = useRef();
@@ -31,10 +31,10 @@ export const Links = ({ nodeRefs }) => {
     });
 
     setLines(initialLines);
-  }, [nodeRefs, hoveredNode]);
+  }, [nodeRefs, hoveredNodeId]);
 
   useFrame((_, delta) => {
-    if (hoveredNode) {
+    if (hoveredNodeId) {
       return;
     }
     group.current.children.forEach((gr, index) => {
@@ -64,7 +64,7 @@ export const Links = ({ nodeRefs }) => {
   return (
     <group ref={group}>
       {links.map((link, index) => {
-        const isHovered = link.source === hoveredNode || link.target === hoveredNode;
+        const isHovered = link.source === hoveredNodeId || link.target === hoveredNodeId;
 
         return lines.length && (
           <group key={`group-${index}`}>
@@ -75,7 +75,7 @@ export const Links = ({ nodeRefs }) => {
               mid={lines[index].mid} // Straight line from start to end
               color={isHovered ? "lime" : "white"}
               dashed
-              transparent={hoveredNode}
+              transparent={hoveredNodeId}
               opacity={0.5}
               dashScale={5}
               gapSize={80}
@@ -87,7 +87,7 @@ export const Links = ({ nodeRefs }) => {
               end={lines[index].end}
               mid={lines[index].mid}
               color={isHovered ? "lime" : "white"}
-              transparent={hoveredNode}
+              transparent={hoveredNodeId}
               opacity={0.1}
               lineWidth={isHovered ? 4 : 0.5}
             />

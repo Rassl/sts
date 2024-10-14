@@ -13,7 +13,7 @@ export const useGraphStore = create((set) => ({
         set(() => ({
             nodePositions: initialPositions,
         })),
-    hoveredNode: null, // Track the hovered node
-    setHoveredNode: (id) => set({ hoveredNode: id }),
+    hoveredNodeId: null, // Track the hovered node
+    setHoveredNodeId: (id) => set({ hoveredNodeId: id }),
 }));
 
