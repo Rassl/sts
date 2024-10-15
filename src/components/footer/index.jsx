@@ -46,6 +46,10 @@ const Wrapper = styled.div`
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)}; /* Fade effect */
   transition: bottom 0.5s ease, opacity 0.5s ease; /* Animate the position and opacity */
 
+  .copyright {
+    font-size: 18px;
+  }
+
   .link {
     font-size: 16px;
     color: #fff;

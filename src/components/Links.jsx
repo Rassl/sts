@@ -1,6 +1,5 @@
 import { QuadraticBezierLine } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useControls } from "leva";
 import { useEffect, useRef, useState } from "react";
 import { useGraphStore } from "../stores/useGraphStore";
 import { links } from "../data";
@@ -8,9 +7,9 @@ import { links } from "../data";
 export const Links = ({ nodeRefs }) => {
   const { hoveredNodeId } = useGraphStore((state) => state);
 
-   const config = useControls({
+   const config = {
      edgeColor: { value: "#9194A4", label: "Link color" }, // Control for hovered color
-   });
+   };
 
   // Create a group reference for grouping lines
   const group = useRef();

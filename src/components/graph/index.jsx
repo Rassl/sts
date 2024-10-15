@@ -2,7 +2,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Box, Edges, QuadraticBezierLine, RoundedBox } from "@react-three/drei";
 import { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
-import { Leva, useControls } from "leva";
 import { Experience } from "../Experience";
 import { Links } from "../Links";
 import { RotatingCube } from "../RotatitgCube";
@@ -26,13 +25,6 @@ export const Graph = () => {
       direction: [Math.random() * speed, Math.random() * speed, Math.random() * speed], // Random initial direction for each node
     }))
   );
-
-  const { mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
-    mipmapBlur: !0,
-    luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
-    luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-    intensity: { value: 2, min: 0, max: 5, step: 0.01 },
-  });
 
   const [hovering, setHovering] = useState(false);
   const cursorRef = useRef();
@@ -63,7 +55,7 @@ export const Graph = () => {
         </svg>
       </div>
 
-      <Leva />
+      {/* <Leva /> */}
       <Canvas
         onPointerOver={() => setHovering(true)}
         onPointerOut={() => setHovering(false)}
@@ -74,12 +66,12 @@ export const Graph = () => {
         {/* <FloatingBg /> */}
         <Selection>
           <EffectComposer>
-            <Bloom
+            {/* <Bloom
               mipmapBlur={mipmapBlur}
               luminanceThreshold={luminanceThreshold}
               luminanceSmoothing={luminanceSmoothing}
               intensity={intensity}
-            />
+            /> */}
             <Outline />
           </EffectComposer>
           <RotatingCube nodeRefs={nodeRefs} />

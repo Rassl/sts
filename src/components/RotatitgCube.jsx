@@ -2,7 +2,6 @@ import { Box, Select } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { useDrag } from "@use-gesture/react";
-import { useControls } from "leva";
 import { useGraphStore } from "../stores/useGraphStore";
 import { nodes } from "../data";
 import { Node } from "./Node";
@@ -13,11 +12,11 @@ export const RotatingCube = ({ nodeRefs }) => {
   const outerCubeRef = useRef();
   const { setHoveredNodeId, hoveredNodeId } = useGraphStore((state) => state);
 
-  const config = useControls({
+  const config = {
     stopRotations: false,
     cubeColor: { value: "#16171d", label: "Cube Color" },
     hoveredColor: { value: "rgba(69, 198, 110, 1)", label: "Hovered Node Color" },
-  });
+  };
 
   useFrame(() => {
     if (!hoveredNodeId && outerCubeRef.current && !config.stopRotations) {
@@ -64,8 +63,8 @@ export const RotatingCube = ({ nodeRefs }) => {
               key={id}
               id={id}
               position={nodeData.position}
-              color={config.cubeColor}
-              hoveredColor={config.hoveredColor}
+              color={"#16171d"}
+              hoveredColor={"rgba(69, 198, 110, 1)"}
               isHovered={hoveredNodeId === id}
               nodeRef={ref}
             />

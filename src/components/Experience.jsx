@@ -1,7 +1,5 @@
 import { OrbitControls } from "@react-three/drei";
-import { useControls } from "leva";
 import { useEffect, useRef } from "react";
-import { RoundedHexagon } from "./Hexagon";
 import { useRefsStore } from "../stores/useRefsStore";
 
 export const Experience = () => {
@@ -18,13 +16,13 @@ export const Experience = () => {
   const lightRefBottomLeft = useRef();
   const lightRefBottomRight = useRef();
 
-  const config = useControls({
+  const config = {
     spotLight: true,
     directionalLightTopLeft: true,
     // directionalLightTopRight: false,
     // directionalLightBottomLeft: false,
     // directionalLightBottomRight: false,
-  });
+  };
 
   if (config.directionalLightTopLeft && lightRefTopLeft.current) {
     lightRefTopLeft.current.lookAt(0, 0, 0); // Make the light point towards (0, 0, 0)

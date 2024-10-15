@@ -1,13 +1,11 @@
 import { Box, Edges, Select } from "@react-three/drei";
 import { createRef, useEffect, useRef } from "react";
 import { Color, Plane, Vector3 } from "three";
-import { useControls } from "leva";
 import { useDrag } from "@use-gesture/react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { nodes } from "../data";
 import { useRefsStore } from "../stores/useRefsStore";
 import { useGraphStore } from "../stores/useGraphStore";
-import { Links } from "./Links"; // Import the Links component
 
 const color = new Color(0x16171d);
 
