@@ -24,6 +24,9 @@ export const Footer = () => {
         <a className="link" href="https://github.com/stakwork" target="_blank" rel="noopener noreferrer">
           Github
         </a>
+        <a className="link" href="mailto:support@stakwork.com" target="_blank" rel="noopener noreferrer">
+          Email
+        </a>
       </div>
     </Wrapper>
   );
@@ -44,7 +47,9 @@ const Wrapper = styled.div`
   transition: bottom 0.5s ease, opacity 0.5s ease; /* Animate the position and opacity */
 
   .link {
+    font-size: 16px;
     color: #fff;
+    text-transform: uppercase;
 
     &:visited,
     &:active {
@@ -53,6 +58,6 @@ const Wrapper = styled.div`
   }
 
   .link + .link {
-    margin-left: 8px;
+    margin-left: 20px;
   }
 `;
