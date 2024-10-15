@@ -80,10 +80,10 @@ export const Links = ({ nodeRefs }) => {
               color={isHovered ? "lime" : config.edgeColor}
               dashed
               transparent={hoveredNodeId}
-              opacity={0.5}
-              dashScale={5}
+              opacity={isHovered ? 0.1 : 0.5}
+              dashScale={isHovered ? 3 : 5}
               gapSize={isHovered ? 8 : 80}
-              lineWidth={isHovered ? 4 : 1}
+              lineWidth={isHovered ? 3 : 1}
             />
             {/* Secondary line for dimmed effect */}
             <QuadraticBezierLine
@@ -93,7 +93,7 @@ export const Links = ({ nodeRefs }) => {
               color={isHovered ? "lime" : config.edgeColor}
               transparent={hoveredNodeId}
               opacity={0.1}
-              lineWidth={isHovered ? 4 : 0.5}
+              lineWidth={isHovered ? 3 : 0.5}
             />
           </group>
         );

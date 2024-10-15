@@ -67,7 +67,7 @@ export const Graph = () => {
       <Canvas
         onPointerOver={() => setHovering(true)}
         onPointerOut={() => setHovering(false)}
-        camera={{ position: [0, 0, 85], fov: 30, near: 0.1, far: 1000 }}
+        camera={{ position: [0, 0, 110], fov: 30, near: 0.1, far: 1000 }}
       >
         <Experience />
         <ambientLight />
