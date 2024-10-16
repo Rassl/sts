@@ -9,7 +9,7 @@ export const KnowledgeGraph = () => {
 
   return (
     <Wrapper>
-      <video className="img" src={`/sts/videos/${hoveredNodeId}.mp4`} autoPlay loop muted playsInline></video>
+      <video className="img" src={`videos/${hoveredNodeId}.mp4`} autoPlay loop muted playsInline></video>
       <div className="content">
         <div className="title">{node.title}</div>
         <div className="subtitle">{node.subtitle}</div>
