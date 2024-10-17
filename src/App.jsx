@@ -10,6 +10,7 @@ import { Graph } from "./components/graph";
 import styled from "styled-components";
 import { Banners } from "./components/banners";
 import { Footer } from "./components/footer";
+import { UserInfo } from "./components/user-info";
 
 export const App = () => {
   return (
@@ -17,6 +18,7 @@ export const App = () => {
       <Logo>
         <img src="Logo.png" alt="" />
       </Logo>
+      <UserInfo />
       <Graph />
       <Banners />
       <Footer />
@@ -35,5 +37,12 @@ const Logo = styled.div`
   position: absolute;
   top: 36px;
   left: 40px;
+  z-index: 1;
+`;
+
+const User = styled.a`
+  position: absolute;
+  top: 36px;
+  right: 40px;
   z-index: 1;
 `;
