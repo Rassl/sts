@@ -16,7 +16,7 @@ export const App = () => {
   return (
     <Wrapper>
       <Logo>
-        <img src="Logo.png" alt="" />
+        <img src="Logo.svg" alt="" />
       </Logo>
       <UserInfo />
       <Graph />

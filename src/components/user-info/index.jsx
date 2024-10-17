@@ -18,7 +18,7 @@ export const UserInfo = () => {
 
   return (
     <User onPointerOver={handlePointerOver} onPointerOut={handlePointerOut}>
-      <img src="User.png" alt="" />
+      <img src="User.svg" alt="" />
       {isHovered && (
         <LinksWrapper>
           <a className="link" href="https://jobs.stakwork.com/admin" target="_blank">
