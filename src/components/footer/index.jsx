@@ -64,4 +64,12 @@ const Wrapper = styled.div`
   .link + .link {
     margin-left: 20px;
   }
+
+  @media (max-width: 768px) {
+    justify-content: space-between;
+
+    .copyright {
+      display: none;
+    }
+  }
 `;

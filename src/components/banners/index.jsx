@@ -136,8 +136,6 @@ const Wrapper = styled.div`
   transition: transform 0.3s ease, opacity 0.3s ease;
   white-space: nowrap;
   z-index: 1000;
-  /* width: 100vw; */
-  /* height: 80vh; */
   display: flex;
   flex-direction: column;
 
@@ -158,6 +156,9 @@ const Wrapper = styled.div`
     .dragger {
       display: block;
     }
+
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
   }
 `;
 

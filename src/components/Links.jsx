@@ -7,18 +7,19 @@ import { links } from "../data";
 export const Links = ({ nodeRefs }) => {
   const { hoveredNodeId } = useGraphStore((state) => state);
 
-   const config = {
-     edgeColor: { value: "#9194A4", label: "Link color" }, // Control for hovered color
-   };
+  const config = {
+    edgeColor: { value: "#9194A4", label: "Link color" }, // Control for hovered color
+  };
 
   // Create a group reference for grouping lines
   const group = useRef();
   const lineRefs = useRef([]);
 
-  const [lines, setLines] = useState([]);
+  const [lines, setLines] = useState({ start: [0, 0, 0], end: [0, 0, 0], mid: [0, 0, 0]});
 
   // Initialize line positions only once
   useEffect(() => {
+    console.log('here')
     const initialLines = links.map((link) => {
       const sourceNode = nodeRefs.current.find((n) => n.id === link.source);
       const targetNode = nodeRefs.current.find((n) => n.id === link.target);
@@ -37,7 +38,7 @@ export const Links = ({ nodeRefs }) => {
   }, [nodeRefs, hoveredNodeId]);
 
   useFrame((_, delta) => {
-    if (hoveredNodeId) {
+    if (hoveredNodeId || false) {
       return;
     }
     group.current.children.forEach((gr, index) => {
@@ -69,32 +70,34 @@ export const Links = ({ nodeRefs }) => {
       {links.map((link, index) => {
         const isHovered = link.source === hoveredNodeId || link.target === hoveredNodeId;
 
-        return lines.length && (
-          <group key={`group-${index}`}>
-            {/* Main line with hover effect */}
-            <QuadraticBezierLine
-              start={lines[index].start}
-              end={lines[index].end}
-              mid={lines[index].mid} // Straight line from start to end
-              color={isHovered ? "lime" : config.edgeColor}
-              dashed
-              transparent={hoveredNodeId}
-              opacity={isHovered ? 0.1 : 0.5}
-              dashScale={isHovered ? 3 : 5}
-              gapSize={isHovered ? 8 : 80}
-              lineWidth={isHovered ? 3 : 1}
-            />
-            {/* Secondary line for dimmed effect */}
-            <QuadraticBezierLine
-              start={lines[index].start}
-              end={lines[index].end}
-              mid={lines[index].mid}
-              color={isHovered ? "lime" : config.edgeColor}
-              transparent={hoveredNodeId}
-              opacity={0.1}
-              lineWidth={isHovered ? 3 : 0.5}
-            />
-          </group>
+        return (
+          lines.length && (
+            <group key={`group-${index}`}>
+              {/* Main line with hover effect */}
+              <QuadraticBezierLine
+                start={lines[index].start}
+                end={lines[index].end}
+                mid={lines[index].mid} // Straight line from start to end
+                color={isHovered ? "lime" : config.edgeColor}
+                dashed
+                transparent={hoveredNodeId}
+                opacity={isHovered ? 0.1 : 0.5}
+                dashScale={isHovered ? 3 : 5}
+                gapSize={isHovered ? 8 : 80}
+                lineWidth={isHovered ? 3 : 1}
+              />
+              {/* Secondary line for dimmed effect */}
+              <QuadraticBezierLine
+                start={lines[index].start}
+                end={lines[index].end}
+                mid={lines[index].mid}
+                color={isHovered ? "lime" : config.edgeColor}
+                transparent={hoveredNodeId}
+                opacity={0.1}
+                lineWidth={isHovered ? 3 : 0.5}
+              />
+            </group>
+          )
         );
       })}
     </group>

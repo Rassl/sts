@@ -65,19 +65,27 @@ const Wrapper = styled.div`
 
   /* Mobile view adjustments */
   @media (max-width: 768px) {
-    height: 80vh;
+    height: calc(var(--vh, 1vh) * 80);
     width: 100vw;
     flex-direction: column;
 
     .img {
-      height: calc(80vh - 168px);
-      width: 100%;
+      height: 100vw;
+      width: 100vw;
     }
 
     .content {
-      height: 168px; /* Remaining height after the video */
-      padding: 16px;
+      height: calc((var(--vh, 1vh) * 80) - 100vw); /* Remaining height after the video */
+      padding: 37px;
       text-align: center;
+    }
+
+    .title {
+      font-size: 20px;
+    }
+
+    .subtitle {
+      font-size: 16px;
     }
   }
 `;
