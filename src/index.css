@@ -1,13 +1,13 @@
 @font-face {
-  font-family: 'Barlow';
+  font-family: "Barlow";
   font-weight: 300;
-  src: local('Barlow'), url('/fonts/Barlow-Light.ttf') format('truetype');
+  src: local("Barlow"), url("/fonts/Barlow-Light.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Supply';
+  font-family: "Supply";
   font-weight: 300;
-  src: local('Supply'), url('/fonts/Supply-Medium.otf') format('truetype');
+  src: local("Supply"), url("/fonts/Supply-Medium.otf") format("truetype");
 }
 
 #root {
@@ -15,9 +15,14 @@
   height: 100vh;
 }
 
+html {
+  overscroll-behavior: none;
+}
+
 body {
   margin: 0;
-  background: #16171D;
+  background: #16171d;
+  overscroll-behavior: none;
 }
 
 canvas {
@@ -30,7 +35,7 @@ canvas {
   height: 20px;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s ease, width 1s ease, height 1s ease;
+  transition: width 1s ease, height 1s ease;
   z-index: 9999;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
@@ -57,5 +62,15 @@ canvas {
   }
   to {
     transform: translate(-50%, -50%) scale(1.2) rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  canvas {
+    cursor: default;
+  }
+
+  .custom-cursor {
+    display: none;
   }
 }

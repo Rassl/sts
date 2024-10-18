@@ -64,18 +64,8 @@ export const Graph = () => {
         <Experience />
         <ambientLight />
         {/* <FloatingBg /> */}
-        <Selection>
-          <EffectComposer>
-            {/* <Bloom
-              mipmapBlur={mipmapBlur}
-              luminanceThreshold={luminanceThreshold}
-              luminanceSmoothing={luminanceSmoothing}
-              intensity={intensity}
-            /> */}
-            <Outline />
-          </EffectComposer>
-          <RotatingCube nodeRefs={nodeRefs} />
-        </Selection>
+
+        <RotatingCube nodeRefs={nodeRefs} />
       </Canvas>
     </>
   );

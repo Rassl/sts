@@ -29,8 +29,6 @@ export const Node = ({ id, position, color, hoveredColor, isHovered, nodeRef }) 
     }
   }, [position, nodeRef, isHovered]);
 
-  console.log(nodeRef.current)
-
   return (
     <RoundedBox
       ref={nodeRef} // Assign nodeRef here, not nodeMesh

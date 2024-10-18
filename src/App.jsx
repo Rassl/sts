@@ -11,8 +11,11 @@ import styled from "styled-components";
 import { Banners } from "./components/banners";
 import { Footer } from "./components/footer";
 import { UserInfo } from "./components/user-info";
+import { useGraphStore } from "./stores/useGraphStore";
 
 export const App = () => {
+const { hoveredNodeId } = useGraphStore((s) => s);
+
   return (
     <Wrapper>
       <Logo>
@@ -20,7 +23,7 @@ export const App = () => {
       </Logo>
       <UserInfo />
       <Graph />
-      <Banners />
+     {hoveredNodeId && <Banners />}
       <Footer />
     </Wrapper>
   );

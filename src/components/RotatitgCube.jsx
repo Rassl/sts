@@ -55,7 +55,7 @@ export const RotatingCube = ({ nodeRefs }) => {
       {hoveredNodeId && <GhostCube config={config} hoveredNode={hoveredNode} />}
 
       {/* Render each node using the Node component */}
-      <Select onPointerOut={onPointerOut} onPointerOver={onPointerIn}>
+      <Select onPointerOut={onPointerOut} onPointerOver={onPointerIn} onClick={onPointerIn}>
         {nodeRefs.current.map(({ ref, id }) => {
           const nodeData = nodes.find((node) => node.id === id);
           return (

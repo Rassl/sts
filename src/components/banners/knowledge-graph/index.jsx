@@ -3,9 +3,9 @@ import { useGraphStore } from "../../../stores/useGraphStore";
 import { nodes } from "../../../data";
 
 export const KnowledgeGraph = () => {
- const { hoveredNodeId } = useGraphStore((s) => s);
+  const { hoveredNodeId } = useGraphStore((s) => s);
 
- const node = nodes.find((i) => i.id === hoveredNodeId)
+  const node = nodes.find((i) => i.id === hoveredNodeId);
 
   return (
     <Wrapper>
@@ -60,6 +60,24 @@ const Wrapper = styled.div`
       font-weight: 300;
       line-height: 140%;
       white-space: normal;
+    }
+  }
+
+  /* Mobile view adjustments */
+  @media (max-width: 768px) {
+    height: 80vh;
+    width: 100vw;
+    flex-direction: column;
+
+    .img {
+      height: calc(80vh - 168px);
+      width: 100%;
+    }
+
+    .content {
+      height: 168px; /* Remaining height after the video */
+      padding: 16px;
+      text-align: center;
     }
   }
 `;
