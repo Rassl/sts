@@ -10,8 +10,6 @@ export const Banners = () => {
   const [translateY, setTranslateY] = useState(0);
   const [startY, setStartY] = useState(null); // Track the initial touch point
 
-  console.log(123)
-
   const threshold = 200; // Distance in pixels after which the component disappears
 
   // Handle window resize to detect mobile view

@@ -18,6 +18,9 @@ export const Footer = () => {
     <Wrapper isVisible={isVisible}>
       <div className="copyright">Stakwork © Copyright 2024 </div>
       <div className="links">
+        <a className="link" href="https://community.sphinx.chat/bounties" target="_blank" rel="noopener noreferrer">
+          Bounties
+        </a>
         <a className="link" href="https://x.com/stakwork" target="_blank" rel="noopener noreferrer">
           X
         </a>
@@ -47,7 +50,7 @@ const Wrapper = styled.div`
   transition: bottom 0.5s ease, opacity 0.5s ease; /* Animate the position and opacity */
 
   .copyright {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .link {

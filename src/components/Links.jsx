@@ -15,11 +15,10 @@ export const Links = ({ nodeRefs }) => {
   const group = useRef();
   const lineRefs = useRef([]);
 
-  const [lines, setLines] = useState({ start: [0, 0, 0], end: [0, 0, 0], mid: [0, 0, 0]});
+  const [lines, setLines] = useState(links.map(() => ({ start: [0, 0, 0], end: [0, 0, 0], mid: [0, 0, 0] })));
 
   // Initialize line positions only once
   useEffect(() => {
-    console.log('here')
     const initialLines = links.map((link) => {
       const sourceNode = nodeRefs.current.find((n) => n.id === link.source);
       const targetNode = nodeRefs.current.find((n) => n.id === link.target);
@@ -33,6 +32,7 @@ export const Links = ({ nodeRefs }) => {
 
       return { start: [0, 0, 0], end: [0, 0, 0], mid: [0, 0, 0] };
     });
+
 
     setLines(initialLines);
   }, [nodeRefs, hoveredNodeId]);
@@ -62,7 +62,9 @@ export const Links = ({ nodeRefs }) => {
   });
 
   useFrame((_, delta) =>
-    group.current.children.forEach((group) => (group.children[0].material.uniforms.dashOffset.value -= delta * 15))
+    group.current.children.forEach((group) => {
+      return (group.children[0].material.uniforms.dashOffset.value -= delta * 15);
+    })
   );
 
   return (
@@ -94,7 +96,7 @@ export const Links = ({ nodeRefs }) => {
                 color={isHovered ? "lime" : config.edgeColor}
                 transparent={hoveredNodeId}
                 opacity={0.1}
-                lineWidth={isHovered ? 3 : 0.5}
+                lineWidth={isHovered ? 0.5 : 0.5}
               />
             </group>
           )
